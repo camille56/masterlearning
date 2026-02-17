@@ -1,0 +1,56 @@
+services:
+  # 1. Le "Cerveau" : PHP-FPM (Ton code Laravel)
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    image: laravel-app
+    container_name: laravel-app
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www
+    networks:
+      - laravel-network
+
+  # 2. Le "Serveur Web" : Nginx (L'entrée pour ton navigateur)
+  web:
+    image: nginx:stable-alpine
+    container_name: laravel-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - laravel-network
+
+  # 3. La "Base de Données" : MySQL
+  db:
+    image: mysql:8.0
+    container_name: laravel-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: laravel_db
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "33061:3306" # Accessible via TablePlus sur le port 33061
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - laravel-network
+
+# --- DÉCLARATION DES RESSOURCES GLOBALES ---
+# C'est ce bloc qui manquait pour lier le tout !
+
+networks:
+  laravel-network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
