@@ -13,6 +13,7 @@ class CourseController extends Controller
     }
 
     public function store(Request $request) {
+        $this->authorize('create', Course::class);
         $data = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',

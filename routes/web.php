@@ -13,7 +13,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('register', [AuthController::class, 'create'])->name('register');
+Route::post('register', [AuthController::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/login', function () {
+    return "<h1>Blog</h1>";
+})->name('blog');
 
 
 Route::apiResource('schools', SchoolController::class);
