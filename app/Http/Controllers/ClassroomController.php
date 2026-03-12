@@ -15,7 +15,7 @@ class ClassroomController extends Controller
     public function store(Request $request) {
         $data = $request->validate([
             'name' => 'required|string',
-            'school_id' => 'required|exists:schools,id', // Vérifie que l'école existe
+            'school_id' => 'required|exists:schools,id',
         ]);
         $classroom = Classroom::create($data);
         return response()->json($classroom, 201);

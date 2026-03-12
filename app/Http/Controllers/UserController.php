@@ -15,7 +15,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
-            'role' => 'required|in:Etudiant,Professeur', // Contrainte sur le rôle
+            'role' => 'required|in:Etudiant,Professeur',
             'classroom_id' => 'required|exists:classrooms,id',
         ]);
         $user = User::create($data);

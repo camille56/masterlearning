@@ -29,7 +29,7 @@ class SchoolController extends Controller
         return response()->json([
             'message' => 'École créée avec succès !',
             'data' => $school
-        ], 201); // 201 signifie "Created"
+        ], 201);
     }
 
     // Récupérer une école spécifique avec ses classes
