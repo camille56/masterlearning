@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SchoolController;
@@ -10,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::apiResource('schools', SchoolController::class);
@@ -27,3 +31,4 @@ Route::get('classes/{schoolclasses}/students', [ClassroomController::class, 'get
 
 //Les cours d'une matière spécifique.
 Route::get('subjects/{subject}/courses', [SubjectController::class, 'getCourses']);
+
