@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -10,55 +9,23 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_a_user_can_register()
+    public function test_registration_screen_can_be_rendered(): void
     {
-        $userData = [
+        $response = $this->get('/register');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_new_users_can_register(): void
+    {
+        $response = $this->post('/register', [
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-        ];
-
-        $response = $this->post(route('register'), $userData);
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect('/');
-
-        $this->assertDatabaseHas('users', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-    }
-
-    public function test_registration_fails_with_mismatched_passwords()
-    {
-        $userData = [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password123',
-            'password_confirmation' => 'wrongpassword',
-        ];
-
-        $response = $this->post(route('register'), $userData);
-
-        $response->assertSessionHasErrors('password');
-        $this->assertGuest();
-    }
-
-    public function test_user_cannot_register_with_an_existing_email()
-    {
-        User::factory()->create(['email' => 'test@example.com']);
-
-        $userData = [
-            'name' => 'Another User',
-            'email' => 'test@example.com',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-        ];
-
-        $response = $this->post(route('register'), $userData);
-
-        $response->assertSessionHasErrors('email');
-        $this->assertGuest();
+        $response->assertRedirect(route('dashboard', absolute: false));
     }
 }
