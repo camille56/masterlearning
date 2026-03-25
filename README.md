@@ -16,3 +16,4 @@ commande artisan: php artisan make:test Auth/RegistrationTest
 Utilisation d'asserts pour verifier le fonctionnement
 On peut créer ses propres asserts
 Pour jouer le test sur phpstorm bouton play "run main"
+ou avec : php artisan test --filter RegistrationTest
