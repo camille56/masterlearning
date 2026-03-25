@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -38,4 +39,8 @@ Route::get('classes/{schoolclasses}/students', [ClassroomController::class, 'get
 
 //Les cours d'une matière spécifique.
 Route::get('subjects/{subject}/courses', [SubjectController::class, 'getCourses']);
+
+Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
+Route::get('/videos/create', [VideoController::class, 'create'])->name('videos.create');
+Route::post('/videos', [VideoController::class, 'store'])->name('videos.store');
 
