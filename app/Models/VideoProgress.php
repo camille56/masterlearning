@@ -19,6 +19,21 @@ class VideoProgress extends Model
         'is_complete',
     ];
 
+    /**
+     * Recherche la progression pour un utilisateur et une vidéo spécifiques.
+     *
+     * @param int $userId L'ID de l'utilisateur.
+     * @param int $videoId L'ID de la vidéo.
+     * @return self|null Retourne l'objet VideoProgress ou null s'il n'est pas trouvé.
+     */
+    public static function findForUserAndVideo(int $userId, int $videoId): ?self
+    {
+        return self::query()
+            ->where('user_id', $userId)
+            ->where('video_id', $videoId)
+            ->first();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
