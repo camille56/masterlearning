@@ -16,7 +16,9 @@
     <div>
         @foreach ($videos as $video)
             <div>
-                <h2>{{ $video->title }}</h2>
+                <h2>
+                    <a href="{{ route('videos.show', $video->id) }}">{{ $video->title }}</a>
+                </h2>
                 <p>{{ $video->description }}</p>
                 <video width="320" height="240" controls>
                     <source src="{{ asset('storage/' . $video->file_path) }}" type="video/mp4">

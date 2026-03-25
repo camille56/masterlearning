@@ -43,4 +43,4 @@ Route::get('subjects/{subject}/courses', [SubjectController::class, 'getCourses'
 Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
 Route::get('/videos/create', [VideoController::class, 'create'])->name('videos.create');
 Route::post('/videos', [VideoController::class, 'store'])->name('videos.store');
-
+Route::get('/videos/{video}', [VideoController::class, 'show'])->name('videos.show');
