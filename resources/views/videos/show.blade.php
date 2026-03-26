@@ -24,8 +24,8 @@
         // Fonction pour envoyer la mise à jour de la progression
         function sendProgressUpdate(isComplete = false) {
             const currentTime = Math.floor(videoPlayer.currentTime);
-            // Le hash peut être rendu plus complexe plus tard
-            const lastHash = `hash_for_${videoId}_at_${currentTime}`;
+
+            // const lastHash = `${videoId}${currentTime}`;
 
             console.log(`Envoi de la progression : ${currentTime}s, Terminé : ${isComplete}`);
 
@@ -38,7 +38,7 @@
                 body: JSON.stringify({
                     video_id: videoId,
                     last_timestamp: currentTime,
-                    last_hash: lastHash,
+                    // last_hash: lastHash,
                     is_complete: isComplete
                 })
             })
@@ -49,10 +49,10 @@
 
         // Démarre l'envoi de la progression à intervalles réguliers
         videoPlayer.addEventListener('play', () => {
-            console.log('Lecture démarrée. Début des mises à jour toutes les 10 secondes.');
+            console.log('Lecture démarrée. Début des mises à jour toutes les 5 secondes.');
             // On s'assure de ne pas avoir plusieurs intervalles en même temps
             clearInterval(progressInterval);
-            progressInterval = setInterval(() => sendProgressUpdate(false), 10000);
+            progressInterval = setInterval(() => sendProgressUpdate(false), 5000);
         });
 
         // Arrête l'envoi de la progression lorsque la vidéo est en pause
